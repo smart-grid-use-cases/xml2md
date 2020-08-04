@@ -40,6 +40,7 @@ def main():
                     #print(usecase)
                     usecase['AreaLibrary'] = xmlobj['UC:UseCaseRepository']['AreaLibrary']
                     usecase['ActorLibrary'] = xmlobj['UC:UseCaseRepository']['ActorLibrary']
+                    usecase['BusinessObjectLibrary'] = xmlobj['UC:UseCaseRepository']['BusinessObjectLibrary']
                     theUseCase = usecase
                 else:
                     otherUseCases.append(usecase)

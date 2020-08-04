@@ -101,22 +101,31 @@ description: {{description}}
 
 ## 4.1. Overview of Scenarios
 
-| **No.** | **Scenario Name** | **Primary Actor** | **Triggering Event** | **Pre-Condition** | **Post-Condition** |
-| --- | --- | --- | --- | --- | --- |
+| **No.** | **Scenario Name** | **Scenario Description** | **Primary Actor** | **Triggering Event** | **Pre-Condition** | **Post-Condition** |
+| --- | --- | --- | --- | --- | --- | --- |{{#Scenario}}
+| {{number}} | {{name}} | {{description}} | {{#PrimaryActor}} {{name}} {{/PrimaryActor}}  | {{triggeringEvent}} | {{preCondition}} | {{postCondition}} |{{/Scenario}}
 
 ***Notes***
 
 ## 4.2. Steps – Scenarios
 
-**Scenario Name: **
+{{#Scenario}}
+
+| **Scenario Name: ** |
+| --- |
+| {{name}} |
 
 | **Step No.** | **Event.** | **Name of Process/ Activity** | **Description of Process/ Activity.** | **Service** | **Information Producer (Actor)** | **Information Receiver (Actor)** | **Information Exchanged** | **Requirements, R-ID** |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |{{#Step}}
+| {{number}} | {{event}} | {{name}} | {{description}} | {{service}} | {{#InformationProducer}} {{id}} {{/InformationProducer}} | {{#InformationReceiver}} {{id}} {{/InformationReceiver}} | {{#InformationObject}} {{id}} {{/InformationObject}} | {{requirements}} |{{/Step}}
+{{/Scenario}}
 
 # 5. Information Exchanged
 
-|**Information exchanged ID**|**Name of Information** | **Description of Information Exchanged** | **Protocol** |
-| --- | --- | --- | --- |
+|**Information exchanged ID**|**Name of Information** | **Description of Information Exchanged** | **Requirement** |
+| --- | --- | --- | --- |{{#InformationObjects}}{{#InformationObject}}
+| {{id}} | {{name}} | {{description}} | {{#Requirements}} {{#Requirement}} {{id}} {{/Requirement}} {{/Requirements}} |{{/InformationObject}}{{/InformationObjects}}
+
 
 # 6. Requirements (optional)
 
