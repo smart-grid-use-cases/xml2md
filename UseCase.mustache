@@ -117,14 +117,14 @@ description: {{description}}
 
 | **Step No.** | **Event.** | **Name of Process/ Activity** | **Description of Process/ Activity.** | **Service** | **Information Producer (Actor)** | **Information Receiver (Actor)** | **Information Exchanged** | **Requirements, R-ID** |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |{{#Step}}
-| {{number}} | {{event}} | {{name}} | {{description}} | {{service}} | {{#InformationProducer}} {{id}} {{/InformationProducer}} | {{#InformationReceiver}} {{id}} {{/InformationReceiver}} | {{#InformationObject}} {{id}} {{/InformationObject}} | {{requirements}} |{{/Step}}
+| {{number}} | {{event}} | {{name}} | {{description}} | {{service}} | {{#InformationProducer}} {{id}} {{/InformationProducer}} | {{#InformationReceiver}} {{id}} {{/InformationReceiver}} | {{#InformationObject}} {{id}} {{/InformationObject}} | not sure how to get this |{{/Step}}
 {{/Scenario}}
 
 # 5. Information Exchanged
 
 |**Information exchanged ID**|**Name of Information** | **Description of Information Exchanged** | **Requirement** |
 | --- | --- | --- | --- |{{#InformationObjects}}{{#InformationObject}}
-| {{id}} | {{name}} | {{description}} | {{#Requirements}} {{#Requirement}} {{id}} {{/Requirement}} {{/Requirements}} |{{/InformationObject}}{{/InformationObjects}}
+| {{id}} | {{name}} | {{description}} | {{#Requirements}} {{#Requirement}} {{id}}, {{/Requirement}} {{/Requirements}} |{{/InformationObject}}{{/InformationObjects}}
 
 
 # 6. Requirements (optional)

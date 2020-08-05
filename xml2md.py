@@ -37,10 +37,12 @@ def main():
             theUseCase = None
             for usecase in xmlobj['UC:UseCaseRepository']['UseCaseLibrary']['UseCase']:
                 if 'scope' in usecase:
-                    #print(usecase)
+                    print(usecase)
                     usecase['AreaLibrary'] = xmlobj['UC:UseCaseRepository']['AreaLibrary']
                     usecase['ActorLibrary'] = xmlobj['UC:UseCaseRepository']['ActorLibrary']
                     usecase['BusinessObjectLibrary'] = xmlobj['UC:UseCaseRepository']['BusinessObjectLibrary']
+                    usecase['RequirementLibrary'] = xmlobj['UC:UseCaseRepository']['RequirementLibrary']
+                    usecase['CommonTermLibrary'] = xmlobj['UC:UseCaseRepository']['CommonTermLibrary']
                     theUseCase = usecase
                 else:
                     otherUseCases.append(usecase)

@@ -124,7 +124,7 @@ description: {{description}}
 
 | **Step No.** | **Event.** | **Name of Process/ Activity** | **Description of Process/ Activity.** | **Service** | **Information Producer (Actor)** | **Information Receiver (Actor)** | **Information Exchanged** | **Requirements, R-ID** |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |{{#Activity}}
-| {{number}} | {{event}} | {{name}} | {{description}} | {{service}} | {{#InformationProducer}} {{mRID}} {{/InformationProducer}} | {{#InformationReceiver}} {{mRID}} {{/InformationReceiver}} | {{#BusinessObject}} {{mRID}} {{/BusinessObject}} | {{requirements}} |{{/Activity}}
+| {{number}} | {{event}} | {{name}} | {{description}} | {{service}} | {{#InformationProducer}} {{mRID}} {{/InformationProducer}} | {{#InformationReceiver}} {{mRID}} {{/InformationReceiver}} | {{#BusinessObject}} {{mRID}} {{/BusinessObject}} | {{#Requirement}} {{mRID}} {{/Requirement}} |{{/Activity}}
 {{/Scenario}}
 
 # 5. Information Exchanged
@@ -135,11 +135,24 @@ description: {{description}}
 
 
 # 6. Requirements (optional)
+{{#RequirementLibrary}}
+
+| **Identifier** | **Name** | **Description** | ** mRID** |
+| --- | --- | --- | ---|{{#RequirementCategory}}
+| {{identifier}} | {{name}} | {{description}} | {{mRID}} |
+
+| **Identifier** | **Name** | **Description** | ** mRID** |
+| --- | --- | --- | ---|{{#Requirement}}
+| {{identifier}} | {{name}} | {{description}} | {{mRID}} |{{/Requirement}}{{/RequirementCategory}}
+{{/RequirementLibrary}}
 
 # 7. Common Terms and Definitions
 
+{{#CommonTermLibrary}}
 | **Term** | **Definition** |
-| --- | --- |
+| --- | --- |{{#CommonTerm}}
+|{{term}} | {{definition}} | {{/CommonTerm}}{{/CommonTermLibrary}}
+
 
 # 8. Custom Information (optional)
 
