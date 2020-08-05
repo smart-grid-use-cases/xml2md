@@ -1,0 +1,38 @@
+name: test workflow
+
+on:
+  repository_dispatch:
+    events:
+      [ release_event ]
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    name: Create artifacts
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Checkout submodules
+      uses: textbook/git-checkout-submodule-action@master
+    - name: Create MD
+      id:   build-it-now
+      uses: ./
+    - name: UploadRelease
+      uses: actions/upload-artifact@v2
+      with:
+        name: bundle
+        path: ${{ github.workspace }}/output/*.md
+  release:
+    needs: package
+    runs-on: ubuntu-latest
+    steps:
+    - name: GetArtifact
+      uses: actions/download-artifact@v2
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ github.event.client_payload.tag }}
+        files: |
+          bundle/*.md
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
