@@ -1,0 +1,3 @@
+[submodule "xml2md-test"]
+	path = xml2md-test
+	url = git@github.com:smart-grid-use-cases/xml2md-test.git
