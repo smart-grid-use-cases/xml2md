@@ -46,8 +46,6 @@ def main():
                     theUseCase['otherUseCases'] = otherUseCases
                     printMarkdown(usecase, "UseCaseRepository.mustache")
             else:
-                print ("UseCase version")
-                print(xmlobj)
                 printMarkdown(xmlobj['UseCase'], "UseCase.mustache")
             xmlfile.close()
 
