@@ -1,7 +1,7 @@
 import xmltodict
 import chevron
 import sys, os
-from collections import Mapping
+from collections.abc import Mapping
 
 def basename(text, render):
     path = render(text)

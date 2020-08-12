@@ -1,6 +1,6 @@
 ---
-title: {{title}} 
-linkTitle: {{linkTitle}}
+title: {{name}}
+linkTitle: {{mRID}}
 date: {{date}}
 description: {{description}}
 ---
@@ -38,7 +38,7 @@ description: {{description}}
 
 **Complete description**
 
-{{#UseCaseLibrary}}{{#UseCase}}{{#Narrative}}{{{completeDescription}}}{{/Narrative}}{{/UseCase}}{{/UseCaseLibrary}}
+{{#Narrative}}{{{completeDescription}}}{{/Narrative}}
 
 ## 1.5. Key Performance Indicatiors (KPI)
 
@@ -92,7 +92,7 @@ description: {{description}}
 
 | **Actor Name** | **Actor Type** | **Actor Description** | **Further information specific to this Use Case** |
 | -------- | -------- | -------- | -------- |{{#ActorLibrary}}{{#Actor}}
-| {{name}}  | {{type}} | {{description}} | {{furtherInformation}} |{{/Actor}}{{/ActorLibrary}}
+| {{{name}}}  | {{{type}}} | {{{description}}} | {{{furtherInformation}}} |{{/Actor}}{{/ActorLibrary}}
 
 
 ## 3.2. References
