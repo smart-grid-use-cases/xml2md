@@ -1,14 +1,19 @@
 import xmltodict
 import chevron
+import json
 import sys, os
 from collections.abc import Mapping
 
-def basename(text, render):
-    path = render(text)
-    return os.path.basename(path)
+def extractText(text, render):
+    drawingObject = json.loads(render(text).replace("'", '"'))
+    if '#text' in drawingObject:
+        name = os.path.basename(drawingObject['#text'])
+        filename = name.rfind('\\')
+        return name[filename+1:]
+    return ""
 
 def printMarkdown(dataObj, filename):
-    dataObj['basename'] = basename
+    dataObj['extractText'] = extractText
     with open(filename) as template:
         args = { "template": template,
                  "data":     dataObj }
@@ -26,7 +31,7 @@ def main():
     for filename in sys.argv[1:]:
         with open(filename) as xmlfile:
             usecase = None
-            xmlobj = xmltodict.parse(xmlfile.read())
+            xmlobj = xmltodict.parse(xmlfile.read(), dict_constructor=dict)
 
             if 'UC:UseCaseRepository' in xmlobj:
                 otherUseCases = []

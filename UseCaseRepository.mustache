@@ -81,10 +81,9 @@ description: {{description}}
 |{{#GeneralRemark}}{{content}}{{/GeneralRemark}}|
 
 # 2. Diagrams of Use Case
-
-![title](filename)
-
-*text*
+{{#Drawing}}
+![{{name}}]({{#extractText}}{{URI}}{{/extractText}})
+{{/Drawing}}
 
 # 3. Technical Details
 
