@@ -1,0 +1,43 @@
+name: test workflow
+
+on:
+  repository_dispatch:
+    events:
+      [ release_event ]
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    name: Create artifacts
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Checkout submodules
+      uses: textbook/git-checkout-submodule-action@master
+    - name: Create MD
+      id:   build-it-now
+      uses: ./
+    - name: Create Archive
+      id: create-archive
+      run: |
+        zip -r Bridge Bridge
+    - name: Create Release
+      id: create-release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.event.client_payload.tag }}
+        release_name: Release ${{ github.event.client_payload.tag }}
+        draft: false
+        prerelease: false
+    - name: Upload Release Asset
+      id: upload-release-asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create-release.outputs.upload_url }}
+        asset_path: ./Bridge.zip
+        asset_name: Bridge.zip
+        asset_content_type: application/zip

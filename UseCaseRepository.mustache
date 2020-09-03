@@ -1,0 +1,163 @@
+---
+title: {{name}}
+linkTitle: {{mRID}}
+date: {{date}}
+description: {{description}}
+---
+
+# 1. Description of the Use Case
+
+## 1.1. Name of the Use Case
+
+| ID  | Area /Domain(s)/Zone(s)| Name of the Use Case |
+| --- | ---                    | ---                  |
+| 1 | {{#AreaLibrary}}{{#Area}}{{name}}, {{/Area}}{{/AreaLibrary}} |  {{name}} | 
+
+## 1.2. Version Management
+
+|Version No.|Date     |Name of author(s)|Changes|Approval status|
+| --------- | ------- | --------------- | ----- | ------------- |
+{{#Version}}
+|{{number}}|{{date}}|{{#Author}}{{name}}, {{/Author}}|{{changes}}|{{approvalStatus}}|
+{{/Version}}
+
+## 1.3. Scope and Objectives of Use Case
+
+| --- | --- |
+{{#scope}}
+| Scope | {{.}} |
+| **Objective(s)** | {{#RelatedObjective}} - {{name}} {{/RelatedObjective}} |
+| **Related business case(s)** | {{#RelatedUseCase}} - {{mRID}} {{/RelatedUseCase}} |
+{{/scope}}
+
+## 1.4. Narrative of Use Case
+
+
+**Short description**
+{{#Narrative}}{{shortDescription}}{{/Narrative}}
+
+**Complete description**
+
+{{#Narrative}}{{{completeDescription}}}{{/Narrative}}
+
+## 1.5. Key Performance Indicatiors (KPI)
+
+|ID   |Name   | Description   | Reference to mentioned use case objectives|
+|-----|-------|---------------|-------------------------------------------|
+{{#KeyPerformanceIndicator}}
+|{{identifier}}|{{name}}|{{description}}|{{#Objective}}{{mRID}}, {{/Objective}}|{{/KeyPerformanceIndicator}}
+
+## 1.6. Use case conditions
+
+|Assumptions|
+|-----------|
+{{#Assumption}}
+|{{name}}|{{/Assumption}}
+
+|Prerequisites|
+|-----------|
+{{#Prerequisite}}
+|{{name}}|{{/Prerequisite}}
+
+## 1.7. Further information to the use case for classification/mapping
+
+|Relation to other use cases|
+|---------------------------|
+|{{#otherUseCases}}{{{nature}}}|{{{name}}}{{/otherUseCases}}|
+|**Level of depth**|{{#levelOfDepth}}{{.}}{{/levelOfDepth}}|
+|**Prioritisation**|
+|{{#prioritization}}{{.}}{{/prioritization}}|
+|**Generic, regional or national relation**|
+|{{#classification}}{{.}}{{/classification}}|
+|**Nature of the use cases**|
+|{{#nature}}{{.}}{{/nature}}|
+|**Further keywords for classification**|
+|{{#keywords}}{{.}}{{/keywords}}|
+
+## 1.8. General remarks
+
+|General remarks|
+|---|
+|{{#GeneralRemark}}{{content}}{{/GeneralRemark}}|
+
+# 2. Diagrams of Use Case
+{{#Drawing}}
+![{{name}}]({{#extractText}}{{URI}}{{/extractText}})
+{{/Drawing}}
+
+# 3. Technical Details
+
+## 3.1. Actors
+
+| **Actor Name** | **Actor Type** | **Actor Description** | **Further information specific to this Use Case** |
+| -------- | -------- | -------- | -------- |{{#ActorLibrary}}{{#Actor}}
+| {{{name}}}  | {{{type}}} | {{{description}}} | {{{furtherInformation}}} |{{/Actor}}{{/ActorLibrary}}
+
+
+## 3.2. References
+
+| **No.** | **References Type** | **Reference** | **Status** | **Impact on Use Case** | **Organistaor / Organisation** | **Link** |
+| --- | --- | --- | --- | --- | --- | --- |{{#Reference}}
+| {{id}} | {{type}} | {{name}} | {{status}} | {{impact}} | {{originatorOrganisation}} | {{link}} |{{/Reference}}
+
+
+
+# 4. Step by Step Analysis of Use Case
+
+## 4.1. Overview of Scenarios
+
+| **No.** | **Scenario Name** | **Scenario Description** |**Primary Actor** | **Triggering Event** | **Pre-Condition** | **Post-Condition** |
+| --- | --- | --- | --- | --- | --- | --- |{{#Scenario}}
+| {{number}} | {{name}} | {{description}} | {{#PrimaryActor}} {{name}} {{/PrimaryActor}}  | {{#TriggeringEvent}} {{name}} {{/TriggeringEvent}}| {{preCondition}} | {{postCondition}} |{{/Scenario}}
+
+
+***Notes***
+
+## 4.2. Steps – Scenarios
+
+{{#Scenario}}
+
+| **Scenario Name:** |
+| --- |
+| {{name}} |
+
+| **Step No.** | **Event.** | **Name of Process/ Activity** | **Description of Process/ Activity.** | **Service** | **Information Producer (Actor)** | **Information Receiver (Actor)** | **Information Exchanged** | **Requirements, R-ID** |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |{{#Activity}}
+| {{number}} | {{event}} | {{name}} | {{description}} | {{service}} | {{#InformationProducer}} {{mRID}} {{/InformationProducer}} | {{#InformationReceiver}} {{mRID}} {{/InformationReceiver}} | {{#BusinessObject}} {{mRID}} {{/BusinessObject}} | {{#Requirement}} {{mRID}} {{/Requirement}} |{{/Activity}}
+{{/Scenario}}
+
+# 5. Information Exchanged
+
+|**Information exchanged ID**|**Name of Information** | **Description of Information Exchanged** | **Requirement** |
+| --- | --- | --- | --- |{{#BusinessObjectLibrary}}{{#BusinessObject}}
+| {{mRID}} | {{name}} | {{description}} | ---- |{{/BusinessObject}}{{/BusinessObjectLibrary}}
+
+
+# 6. Requirements (optional)
+{{#RequirementLibrary}}
+{{#RequirementCategory}}
+
+| **Category Identifier** | **Name** | **Description** | **mRID** |
+| --- | --- | --- | ---|
+| {{identifier}} | {{name}} | {{description}} | {{mRID}} |
+
+| **Identifier** | **Name** | **Description** | **mRID** |
+| --- | --- | --- | ---|{{#Requirement}}
+| {{identifier}} | {{name}} | {{description}} | {{mRID}} |{{/Requirement}}
+{{/RequirementCategory}}
+{{/RequirementLibrary}}
+
+
+# 7. Common Terms and Definitions
+
+{{#CommonTermLibrary}}
+| **Term** | **Definition** |
+| --- | --- |{{#CommonTerm}}
+|{{term}} | {{definition}} | {{/CommonTerm}}{{/CommonTermLibrary}}
+
+
+# 8. Custom Information (optional)
+
+| **Key** | **Value** | **Refers to Section** |
+| --- | --- | --- |
+
