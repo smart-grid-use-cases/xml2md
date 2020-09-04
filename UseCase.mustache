@@ -18,7 +18,7 @@ description: {{description}}
 |Version No.|Date     |Name of author(s)|Changes|Approval status|
 | --------- | ------- | --------------- | ----- | ------------- |
 {{#VersionInformation}}
-|{{number}}|{{date}}|{{authors}}|{{changes}}|{{approvalStatus}}|
+|{{number}}|{{date}}|{{authors}}|{{{changes}}}|{{approvalStatus}}|
 {{/VersionInformation}}
 
 ## 1.3. Scope and Objectives of Use Case
@@ -125,7 +125,7 @@ description: {{description}}
 
 |**Information exchanged ID**|**Name of Information** | **Description of Information Exchanged** | **Requirement** |
 | --- | --- | --- | --- |{{#InformationObjects}}{{#InformationObject}}
-| {{id}} | {{name}} | {{description}} | {{#Requirements}} {{#Requirement}} {{id}}, {{/Requirement}} {{/Requirements}} |{{/InformationObject}}{{/InformationObjects}}
+| {{id}} | {{name}} | {{#removeEndl}}{{{description}}}{{/removeEndl}} | {{#Requirements}} {{#Requirement}} {{id}}, {{/Requirement}} {{/Requirements}} |{{/InformationObject}}{{/InformationObjects}}
 
 
 # 6. Requirements (optional)
