@@ -1,6 +1,6 @@
 ---
 title: {{name}}
-linkTitle: {{mRID}}
+linkTitle: {{name}}
 date: {{date}}
 description: {{description}}
 ---
@@ -22,18 +22,19 @@ description: {{description}}
 {{/Version}}
 
 ## 1.3. Scope and Objectives of Use Case
-
+|||
 | --- | --- |
 {{#scope}}
-| Scope | {{.}} |
-| **Objective(s)** | {{#RelatedObjective}} - {{name}} {{/RelatedObjective}} |
-| **Related business case(s)** | {{#RelatedUseCase}} - {{mRID}} {{/RelatedUseCase}} |
+| **Scope** | {{#removeEndl}}{{{.}}}{{/removeEndl}} |
+| **Objective(s)** | {{#RelatedObjective}} {{name}} {{/RelatedObjective}} |
+| **Related business case(s)** | {{#RelatedUseCase}} {{mRID}} {{/RelatedUseCase}} |
 {{/scope}}
 
 ## 1.4. Narrative of Use Case
 
 
 **Short description**
+
 {{#Narrative}}{{shortDescription}}{{/Narrative}}
 
 **Complete description**
@@ -78,7 +79,7 @@ description: {{description}}
 
 |General remarks|
 |---|
-|{{#GeneralRemark}}{{content}}{{/GeneralRemark}}|
+|{{#GeneralRemark}}{{#removeEndl}}{{{content}}}{{/removeEndl}}{{/GeneralRemark}}|
 
 # 2. Diagrams of Use Case
 {{#Drawing}}
@@ -90,8 +91,9 @@ description: {{description}}
 ## 3.1. Actors
 
 | **Actor Name** | **Actor Type** | **Actor Description** | **Further information specific to this Use Case** |
-| -------- | -------- | -------- | -------- |{{#ActorLibrary}}{{#Actor}}
-| {{{name}}}  | {{{type}}} | {{{description}}} | {{{furtherInformation}}} |{{/Actor}}{{/ActorLibrary}}
+| -------- | -------- | -------- | -------- |
+{{#ActorLibrary}}{{#Actor}}| {{{name}}}  | {{{type}}} | {{#removeEndl}}{{{description}}}{{/removeEndl}} | {{#removeEndl}}{{{furtherInformation}}}{{/removeEndl}} |
+{{/Actor}}{{/ActorLibrary}}
 
 
 ## 3.2. References
@@ -108,7 +110,7 @@ description: {{description}}
 
 | **No.** | **Scenario Name** | **Scenario Description** |**Primary Actor** | **Triggering Event** | **Pre-Condition** | **Post-Condition** |
 | --- | --- | --- | --- | --- | --- | --- |{{#Scenario}}
-| {{number}} | {{name}} | {{description}} | {{#PrimaryActor}} {{name}} {{/PrimaryActor}}  | {{#TriggeringEvent}} {{name}} {{/TriggeringEvent}}| {{preCondition}} | {{postCondition}} |{{/Scenario}}
+| {{number}} | {{name}} | {{#removeEndl}}{{{description}}}{{/removeEndl}} | {{#PrimaryActor}} {{name}} {{/PrimaryActor}}  | {{#TriggeringEvent}} {{name}} {{/TriggeringEvent}}| {{#removeEndl}}{{preCondition}}{{/removeEndl}} | {{#removeEndl}}{{postCondition}}{{/removeEndl}} |{{/Scenario}}
 
 
 ***Notes***
@@ -123,7 +125,7 @@ description: {{description}}
 
 | **Step No.** | **Event.** | **Name of Process/ Activity** | **Description of Process/ Activity.** | **Service** | **Information Producer (Actor)** | **Information Receiver (Actor)** | **Information Exchanged** | **Requirements, R-ID** |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |{{#Activity}}
-| {{number}} | {{event}} | {{name}} | {{description}} | {{service}} | {{#InformationProducer}} {{mRID}} {{/InformationProducer}} | {{#InformationReceiver}} {{mRID}} {{/InformationReceiver}} | {{#BusinessObject}} {{mRID}} {{/BusinessObject}} | {{#Requirement}} {{mRID}} {{/Requirement}} |{{/Activity}}
+| {{number}} | {{event}} | {{name}} | {{#removeEndl}}{{{description}}}{{/removeEndl}} | {{service}} | {{#InformationProducer}} {{mRID}} {{/InformationProducer}} | {{#InformationReceiver}} {{mRID}} {{/InformationReceiver}} | {{#BusinessObject}} {{mRID}} {{/BusinessObject}} | {{#Requirement}} {{mRID}} {{/Requirement}} |{{/Activity}}
 {{/Scenario}}
 
 # 5. Information Exchanged
