@@ -18,7 +18,7 @@ description: {{description}}
 |Version No.|Date     |Name of author(s)|Changes|Approval status|
 | --------- | ------- | --------------- | ----- | ------------- |
 {{#Version}}
-|{{number}}|{{date}}|{{#Author}}{{name}}, {{/Author}}|{{changes}}|{{approvalStatus}}|
+|{{number}}|{{date}}|{{#Author}}{{name}}, {{/Author}}|{{{changes}}}|{{approvalStatus}}|
 {{/Version}}
 
 ## 1.3. Scope and Objectives of Use Case
@@ -132,7 +132,7 @@ description: {{description}}
 
 |**Information exchanged ID**|**Name of Information** | **Description of Information Exchanged** | **Requirement** |
 | --- | --- | --- | --- |{{#BusinessObjectLibrary}}{{#BusinessObject}}
-| {{mRID}} | {{name}} | {{description}} | ---- |{{/BusinessObject}}{{/BusinessObjectLibrary}}
+| {{mRID}} | {{name}} | {{#removeEndl}}{{{description}}}{{/removeEndl}} | ---- |{{/BusinessObject}}{{/BusinessObjectLibrary}}
 
 
 # 6. Requirements (optional)
@@ -144,7 +144,7 @@ description: {{description}}
 | {{identifier}} | {{name}} | {{description}} | {{mRID}} |
 
 | **Identifier** | **Name** | **Description** | **mRID** |
-| --- | --- | --- | ---|{{#Requirement}}
+| --- | --- | --- | --- |{{#Requirement}}
 | {{identifier}} | {{name}} | {{description}} | {{mRID}} |{{/Requirement}}
 {{/RequirementCategory}}
 {{/RequirementLibrary}}
