@@ -2,6 +2,7 @@ import xmltodict
 import chevron
 import json
 import sys, os
+from datetime import date
 from collections.abc import Mapping
 
 def extractText(text, render):
@@ -29,6 +30,7 @@ def addLibraryObjects(usecase, xmlobj):
 
 def main():
     for filename in sys.argv[1:]:
+        mtime = date.fromtimestamp(os.path.getmtime(filename)).isoformat()
         with open(filename) as xmlfile:
             usecase = None
             xmlobj = xmltodict.parse(xmlfile.read(), dict_constructor=dict)
@@ -49,8 +51,10 @@ def main():
                             theUseCase = addLibraryObjects(usecase, xmlobj)
                 if theUseCase:
                     theUseCase['otherUseCases'] = otherUseCases
-                    printMarkdown(usecase, "UseCaseRepository.mustache")
+                    theUseCase['date'] = mtime
+                    printMarkdown(theUseCase, "UseCaseRepository.mustache")
             else:
+                xmlobj['UseCase']['date'] = mtime
                 printMarkdown(xmlobj['UseCase'], "UseCase.mustache")
             xmlfile.close()
 
