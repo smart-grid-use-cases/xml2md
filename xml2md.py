@@ -5,6 +5,11 @@ import sys, os
 from datetime import date
 from collections.abc import Mapping
 
+def removeEndl(text, render):
+    stringWithEndl = render(text)
+    stringWithoutEndl = stringWithEndl.replace('\n', ' ')
+    return stringWithoutEndl
+
 def extractText(text, render):
     drawingObject = json.loads(render(text).replace("'", '"'))
     if '#text' in drawingObject:
@@ -15,6 +20,7 @@ def extractText(text, render):
 
 def printMarkdown(dataObj, filename):
     dataObj['extractText'] = extractText
+    dataObj['removeEndl'] = removeEndl
     with open(filename) as template:
         args = { "template": template,
                  "data":     dataObj }

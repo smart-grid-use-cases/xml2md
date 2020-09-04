@@ -22,12 +22,12 @@ description: {{description}}
 {{/Version}}
 
 ## 1.3. Scope and Objectives of Use Case
-
+|||
 | --- | --- |
 {{#scope}}
-| Scope | {{.}} |
-| **Objective(s)** | {{#RelatedObjective}} - {{name}} {{/RelatedObjective}} |
-| **Related business case(s)** | {{#RelatedUseCase}} - {{mRID}} {{/RelatedUseCase}} |
+| **Scope** | {{#removeEndl}}{{{.}}}{{/removeEndl}} |
+| **Objective(s)** | {{#RelatedObjective}} {{name}} {{/RelatedObjective}} |
+| **Related business case(s)** | {{#RelatedUseCase}} {{mRID}} {{/RelatedUseCase}} |
 {{/scope}}
 
 ## 1.4. Narrative of Use Case
