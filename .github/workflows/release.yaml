@@ -12,8 +12,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Checkout submodules
-      uses: textbook/git-checkout-submodule-action@master
     - name: Get Latest xml2md-input
       id: xml2md-input-release
       run: ::set-output name={xml2md-input-version}::{$(./get_latest.sh ${{ github.repository_owner }} xml2md-input Release.zip xml2md-input)}
