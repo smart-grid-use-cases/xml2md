@@ -26,13 +26,18 @@ def printMarkdown(dataObj, filename):
                  "data":     dataObj }
         print(chevron.render(**args))
 
-def addLibraryObjects(usecase, xmlobj):
-    usecase['AreaLibrary'] = xmlobj['UC:UseCaseRepository']['AreaLibrary']
-    usecase['ActorLibrary'] = xmlobj['UC:UseCaseRepository']['ActorLibrary']
-    usecase['BusinessObjectLibrary'] = xmlobj['UC:UseCaseRepository']['BusinessObjectLibrary']
-    usecase['RequirementLibrary'] = xmlobj['UC:UseCaseRepository']['RequirementLibrary']
-    usecase['CommonTermLibrary'] = xmlobj['UC:UseCaseRepository']['CommonTermLibrary']
-    return usecase
+def addIfExists(elemName, dest, src):
+    if elemName in src:
+        dest[elemName] = src[elemName]
+
+def addLibraryObjects(dest, src, rootNode):
+    print(src, dest, rootNode)
+    addIfExists('AreaLibrary', dest, src[rootNode])
+    addIfExists('ActorLibrary', dest, src[rootNode])
+    addIfExists('BusinessObjectLibrary', dest, src[rootNode])
+    addIfExists('RequirementLibrary', dest, src[rootNode])
+    addIfExists('CommonTermLibrary', dest, src[rootNode])
+    return dest
 
 def main():
     for filename in sys.argv[1:]:
@@ -41,27 +46,39 @@ def main():
             usecase = None
             xmlobj = xmltodict.parse(xmlfile.read(), dict_constructor=dict)
 
+            rootNode = None
             if 'UC:UseCaseRepository' in xmlobj:
+                rootNode = 'UC:UseCaseRepository'
+            elif 'UseCaseRepository' in xmlobj:
+                rootNode = 'UseCaseRepository'
+            elif 'UseCase' in xmlobj:
+                rootNode = 'UseCase'
+
+            if rootNode == 'UseCaseRepository' or rootNode == 'UC:UseCaseRepository':
                 otherUseCases = []
                 theUseCase = None
-                if 'UseCase' in xmlobj['UC:UseCaseRepository']['UseCaseLibrary']:
-                    if type(xmlobj['UC:UseCaseRepository']['UseCaseLibrary']['UseCase']) is list:
-                        for usecase in xmlobj['UC:UseCaseRepository']['UseCaseLibrary']['UseCase']:
+                if 'UseCase' in xmlobj[rootNode]['UseCaseLibrary']:
+                    if type(xmlobj[rootNode]['UseCaseLibrary']['UseCase']) is list:
+                        for usecase in xmlobj[rootNode]['UseCaseLibrary']['UseCase']:
                             if 'scope' in usecase:
-                                theUseCase = addLibraryObjects(usecase, xmlobj)
+                                theUseCase = addLibraryObjects(usecase, xmlobj, rootNode)
                             else:
                                 otherUseCases.append(usecase)
-                    elif isinstance(xmlobj['UC:UseCaseRepository']['UseCaseLibrary']['UseCase'], Mapping):
-                        if 'scope' in xmlobj['UC:UseCaseRepository']['UseCaseLibrary']['UseCase']:
-                            usecase = xmlobj['UC:UseCaseRepository']['UseCaseLibrary']['UseCase']
-                            theUseCase = addLibraryObjects(usecase, xmlobj)
+                    elif isinstance(xmlobj[rootNode]['UseCaseLibrary']['UseCase'], Mapping):
+                        if 'scope' in xmlobj[rootNode]['UseCaseLibrary']['UseCase']:
+                            usecase = xmlobj[rootNode]['UseCaseLibrary']['UseCase']
+                            theUseCase = addLibraryObjects(usecase, xmlobj, rootNode)
                 if theUseCase:
                     theUseCase['otherUseCases'] = otherUseCases
                     theUseCase['date'] = mtime
                     printMarkdown(theUseCase, "UseCaseRepository.mustache")
-            else:
+            elif rootNode == 'UseCase':
                 xmlobj['UseCase']['date'] = mtime
                 printMarkdown(xmlobj['UseCase'], "UseCase.mustache")
+            else:
+                print("Cannot idenitify root node.")
+                sys.exit(1)
+
             xmlfile.close()
 
 if __name__ == "__main__":
