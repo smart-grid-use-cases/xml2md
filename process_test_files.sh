@@ -17,8 +17,6 @@ weight: 5
 ---
 EOF
 
-./get_latest_excel2xml.sh
-
 # process all *.xml files from grupoetra and create index.md
 find grupoetra/* -type f -name '*.xml' -exec sh -c '
   file="$0"
@@ -32,7 +30,7 @@ find grupoetra/* -type f -name '*.xml' -exec sh -c '
 ' {} ${OUTPUT_DIR} ';'
 
 # process all *.xml files from xml2md-input and create index.md
-find xml2md-test/* -type f -name '*.xml' -exec sh -c '
+find xml2md-input/* -type f -name '*.xml' -exec sh -c '
   file="$0"
   OUTPUT_DIR="$1"
   dirnameprefix=$(dirname "${file}")
@@ -44,7 +42,7 @@ find xml2md-test/* -type f -name '*.xml' -exec sh -c '
 ' {} ${OUTPUT_DIR} ';'
 
 # cp all the *.png files into the output directory
-find xml2md-test/* -type f -name '*.png' -exec sh -c '
+find xml2md-input/* -type f -name '*.png' -exec sh -c '
   file="$0"
   OUTPUT_DIR="$1"
   basename=$(basename $file)
