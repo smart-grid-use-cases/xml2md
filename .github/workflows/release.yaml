@@ -45,5 +45,5 @@ jobs:
       with:
         event-type: release_event
         token: ${{ secrets.REPO_TRIGGER_KEY }}
-        repository: smart-grid-use-cases/github-pages
+        repository: "${{ github.repository_owner }}/github_pages"
         client-payload: '{"tag": "${{ github.event.client_payload.tag }}" }'
