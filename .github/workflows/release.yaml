@@ -16,16 +16,14 @@ jobs:
       id: xml2md-input-release
       run: |
           GET_LATEST_OUTPUT=$(./get_latest.sh ${{ github.repository_owner }} xml2md-input Release.zip xml2md-input)
-          echo "GLO: ${GET_LATEST_OUTPUT}"
-          RELEASE_VERSION=$(echo $GET_LATEST_OUTPUT | sed 's/Release version: //')
+          RELEASE_VERSION=$(echo $GET_LATEST_OUTPUT | sed 's/Release version: release-//')
           echo "RELEASE_VERSION: ${RELEASE_VERSION}"
           echo ::set-output name=xml2md-input-version::${RELEASE_VERSION}
     - name: Get Latest excel2xml-input
       id: excel2xml-release
       run: |
           GET_LATEST_OUTPUT=$(./get_latest.sh ${{ github.repository_owner }} excel2xml grupoetra.zip grupoetra)
-          echo "GLO: ${GET_LATEST_OUTPUT}"
-          RELEASE_VERSION=$(echo $GET_LATEST_OUTPUT | sed 's/Release version: //')
+          RELEASE_VERSION=$(echo $GET_LATEST_OUTPUT | sed 's/Release version: release-//')
           echo "RELEASE_VERSION: ${RELEASE_VERSION}"
           echo ::set-output name=excel2xml-version::${RELEASE_VERSION}
     - name: Create MD
@@ -45,8 +43,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.event.client_payload.tag }}
-        release_name: Release ${{ github.event.client_payload.tag }}
+        tag_name: "xml2md-${{ steps.xml2md-input-release.outputs.xml2md-input-version }}-excel2xml-${{ steps.excel2xml-release.outputs.excel2xml-version }}"
+        release_name: "xml2md-${{ steps.xml2md-input-release.outputs.xml2md-input-version }}-excel2xml-${{ steps.excel2xml-release.outputs.excel2xml-version }}"
         body: "Contains:\nxml2md-input release: ${{ steps.xml2md-input-release.outputs.xml2md-input-version }}\nexcel2xml release: ${{ steps.excel2xml-release.outputs.excel2xml-version }}"
         draft: false
         prerelease: false

@@ -31,7 +31,6 @@ def addIfExists(elemName, dest, src):
         dest[elemName] = src[elemName]
 
 def addLibraryObjects(dest, src, rootNode):
-    print(src, dest, rootNode)
     addIfExists('AreaLibrary', dest, src[rootNode])
     addIfExists('ActorLibrary', dest, src[rootNode])
     addIfExists('BusinessObjectLibrary', dest, src[rootNode])
