@@ -7,13 +7,13 @@ prefix="Location: https://github.com/${owner_url}/${repo_name}/releases/tag/"
 suffix=" [following]"
 tail=${latest_url#"$prefix"}
 release_version=${tail%"$suffix"}
-echo "$release_version"
+echo "Release version: $release_version"
 if [ -z "${file_request}" ]
 then
     exit 0
 else
-    wget https://github.com/${owner_url}/${repo_name}/releases/download/${release_version}/${file_request}
-    unzip $file_request -d $destination
+    wget -q https://github.com/${owner_url}/${repo_name}/releases/download/${release_version}/${file_request}
+    unzip -q $file_request -d $destination
     rm $file_request
     exit 0
 fi
