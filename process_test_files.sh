@@ -9,24 +9,17 @@ fi
 
 mkdir -p ${OUTPUT_DIR}
 
-cat > ${OUTPUT_DIR}/_index.md <<EOF
----
-title: "Bridge"
-linkTitle: "Bridge"
-weight: 5
----
-EOF
-
 # process all *.xml files from grupoetra and create index.md
 find grupoetra/* -type f -name '*.xml' -exec sh -c '
-  file="$0"
+  set -x
+  FILE="$0"
   OUTPUT_DIR="$1"
-  dirnameprefix=$(dirname "${file}")
-  DIRNAME=${dirnameprefix#"grupoetra/"}
+  DIRNAMEPREFIX=$(dirname "${FILE}")
+  DIRNAME=${DIRNAMEPREFIX#"grupoetra/"}
   mkdir -p ${OUTPUT_DIR}/${DIRNAME}
-  output_file_name="${OUTPUT_DIR}/${DIRNAME}/index.md"
-  echo "$output_file_name"
-  python3 xml2md.py "$file" > "$output_file_name"
+  OUTPUT_FILE_NAME="${OUTPUT_DIR}/${DIRNAME}/index.md"
+  echo "Creating markdown file: $OUTPUT_FILE_NAME"
+  python3 xml2md.py "$FILE" > "$OUTPUT_FILE_NAME"
 ' {} ${OUTPUT_DIR} ';'
 
 # process all *.xml files from xml2md-input and create index.md
@@ -37,7 +30,7 @@ find xml2md-input/* -type f -name '*.xml' -exec sh -c '
   DIRNAME=${dirnameprefix#"xml2md-input/"}
   mkdir -p ${OUTPUT_DIR}/${DIRNAME}
   output_file_name="${OUTPUT_DIR}/${DIRNAME}/index.md"
-  echo "$output_file_name"
+  echo "Creating markdown file: $output_file_name"
   python3 xml2md.py "$file" > "$output_file_name"
 ' {} ${OUTPUT_DIR} ';'
 
@@ -49,5 +42,25 @@ find xml2md-input/* -type f -name '*.png' -exec sh -c '
   dirnameprefix=$(dirname "${file}")
   DIRNAME=${dirnameprefix#"xml2md-input/"}
   output_file_name="${OUTPUT_DIR}/${DIRNAME}/${basename}"
+  echo "Creating diagram file: $output_file_name"
   cp $file $output_file_name
+' {} ${OUTPUT_DIR} ';'
+
+find "${OUTPUT_DIR}" -type d -exec sh -c '
+  DIRPATH=$0
+  DIRNAME=$(basename $DIRPATH)
+  if [ ! -f "${DIRPATH}/index.md" ]
+  then
+    if [ ! -f "${DIRPATH}/_index.md" ]
+    then
+      echo Creating title link for directory: $DIRPATH
+      cat > ${DIRPATH}/_index.md <<EOF
+---
+title: "$DIRNAME"
+linkTitle: "$DIRNAME"
+weight: 5
+---
+EOF
+    fi
+  fi
 ' {} ${OUTPUT_DIR} ';'

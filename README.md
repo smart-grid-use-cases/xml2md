@@ -21,5 +21,10 @@ sudo apt install python3
 pip3 install xmltodict chevron
 
 ### Run
-mkdir output
-./process_test_files.sh output
+In the following commands, $(repo_owner) will either be smart-grid-use-cases or
+your github username, if you wish to download the dependency from a fork.
+
+    mkdir Bridge
+    ./get_latest.sh $(repo_owner) excel2xml grupoetra.zip grupoetra
+    ./get_latest.sh $(repo_owner) xml2md-input Release.zip xml2md-input
+    ./process_test_files.sh Bridge
