@@ -15,17 +15,15 @@ RUN_XML2MD=$(cat << EOM
   FILE=\$0
   OUTPUT_DIR="\$1"
   PREFIX="\$2"
-  BASENAME_WITH_SUFFIX=\$(basename "\${FILE}")
-  BASENAME=\${BASENAME_WITH_SUFFIX%.xml}
   DIRNAMEPREFIX=\$(dirname "\${FILE}")
   IS_TLD=\$(echo \${DIRNAMEPREFIX} | grep "/")
   if [ \$? -eq 1 ]; then
-    DIRNAME=\${BASENAME}
+    DIRNAME=/
   else
-    DIRNAME=\${DIRNAMEPREFIX#\$PREFIX}/\${BASENAME}
+    DIRNAME=/\${DIRNAMEPREFIX#\$PREFIX}
   fi
   mkdir -p "\${OUTPUT_DIR}/\${DIRNAME}/"
-  OUTPUT_FILE_NAME="\${OUTPUT_DIR}/\${DIRNAME}/index.md"
+  OUTPUT_FILE_NAME="\${OUTPUT_DIR}\${DIRNAME}/index.md"
   echo "Creating markdown file: \$OUTPUT_FILE_NAME"
   python3 xml2md.py "\$FILE" > "\${OUTPUT_FILE_NAME}"
   IMAGES=\$(find "\${DIRNAMEPREFIX}" -iname *.png)
