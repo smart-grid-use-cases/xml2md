@@ -19,11 +19,12 @@ RUN_XML2MD=$(cat << EOM
   BASENAME_WITH_SUFFIX=\$(basename "\${FILE}")
   BASENAME=\${BASENAME_WITH_SUFFIX%.xml}
   DIRNAMEPREFIX=\$(dirname "\${FILE}")
+  [[ \"\${DIRNAMEPREFIX}\" =~ / ]] || DIRNAMEPREFIX="\$DIRNAMEPREFIX/"
   DIRNAME=\${DIRNAMEPREFIX#\$PREFIX}/\${BASENAME}
   mkdir -p "\${OUTPUT_DIR}/\${DIRNAME}/"
   OUTPUT_FILE_NAME="\${OUTPUT_DIR}/\${DIRNAME}/index.md"
   echo "Creating markdown file: \$OUTPUT_FILE_NAME"
-  python3 xml2md.py "\$FILE" > \$OUTPUT_FILE_NAME
+  python3 xml2md.py "\$FILE" > "\${OUTPUT_FILE_NAME}"
   IMAGES=\$(find "\${DIRNAMEPREFIX}" -iname *.png)
   for IMAGE in \$IMAGES
   do
@@ -34,12 +35,12 @@ EOM
 )
 
 # process all *.xml files from grupoetra and create index.md
-find grupoetra/* -type f -name '*.xml' -exec sh -c "$RUN_XML2MD" {} ${OUTPUT_DIR} "grupoetra/" ';'
+find grupoetra/* -type f -name '*.xml' -exec bash -c "$RUN_XML2MD" {} ${OUTPUT_DIR} "grupoetra/" ';'
 
 # process all *.xml files from xml2md-input and create index.md
-find xml2md-input/* -type f -name '*.xml' -exec sh -c "$RUN_XML2MD" {} ${OUTPUT_DIR} "xml2md-input/" ';'
+find xml2md-input/* -type f -name '*.xml' -exec bash -c "$RUN_XML2MD" {} ${OUTPUT_DIR} "xml2md-input/" ';'
 
-find "${OUTPUT_DIR}" -type d -exec sh -c '
+find "${OUTPUT_DIR}" -type d -exec bash -c '
   DIRPATH=$0
   DIRNAME=$(basename "$DIRPATH")
   if [ ! -f "${DIRPATH}/index.md" ]
