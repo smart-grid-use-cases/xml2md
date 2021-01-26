@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 set -o errexit
 
@@ -12,15 +12,18 @@ fi
 mkdir -p ${OUTPUT_DIR}
 
 RUN_XML2MD=$(cat << EOM
-  set -o errexit
   FILE=\$0
   OUTPUT_DIR="\$1"
   PREFIX="\$2"
   BASENAME_WITH_SUFFIX=\$(basename "\${FILE}")
   BASENAME=\${BASENAME_WITH_SUFFIX%.xml}
   DIRNAMEPREFIX=\$(dirname "\${FILE}")
-  [[ \"\${DIRNAMEPREFIX}\" =~ / ]] || DIRNAMEPREFIX="\$DIRNAMEPREFIX/"
-  DIRNAME=\${DIRNAMEPREFIX#\$PREFIX}/\${BASENAME}
+  IS_TLD=\$(echo \${DIRNAMEPREFIX} | grep "/")
+  if [ \$? -eq 1 ]; then
+    DIRNAME=\${BASENAME}
+  else
+    DIRNAME=\${DIRNAMEPREFIX#\$PREFIX}/\${BASENAME}
+  fi
   mkdir -p "\${OUTPUT_DIR}/\${DIRNAME}/"
   OUTPUT_FILE_NAME="\${OUTPUT_DIR}/\${DIRNAME}/index.md"
   echo "Creating markdown file: \$OUTPUT_FILE_NAME"
@@ -35,12 +38,12 @@ EOM
 )
 
 # process all *.xml files from grupoetra and create index.md
-find grupoetra/* -type f -name '*.xml' -exec bash -c "$RUN_XML2MD" {} ${OUTPUT_DIR} "grupoetra/" ';'
+find grupoetra/* -type f -name '*.xml' -exec sh -c "$RUN_XML2MD" {} ${OUTPUT_DIR} "grupoetra/" ';'
 
 # process all *.xml files from xml2md-input and create index.md
-find xml2md-input/* -type f -name '*.xml' -exec bash -c "$RUN_XML2MD" {} ${OUTPUT_DIR} "xml2md-input/" ';'
+find xml2md-input/* -type f -name '*.xml' -exec sh -c "$RUN_XML2MD" {} ${OUTPUT_DIR} "xml2md-input/" ';'
 
-find "${OUTPUT_DIR}" -type d -exec bash -c '
+find "${OUTPUT_DIR}" -type d -exec sh -c '
   DIRPATH=$0
   DIRNAME=$(basename "$DIRPATH")
   if [ ! -f "${DIRPATH}/index.md" ]
