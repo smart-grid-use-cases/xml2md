@@ -44,6 +44,12 @@ def main():
         with open(filename) as xmlfile:
             usecase = None
             xmlobj = xmltodict.parse(xmlfile.read(), dict_constructor=dict)
+            fileTokens = filename.split('/')
+            folderDepth = len(fileTokens)
+            if folderDepth > 2:
+                linkTitle = fileTokens[folderDepth - 2]
+            else:
+                linkTitle = None
 
             rootNode = None
             if 'UC:UseCaseRepository' in xmlobj:
@@ -70,12 +76,20 @@ def main():
                 if theUseCase:
                     theUseCase['otherUseCases'] = otherUseCases
                     theUseCase['date'] = mtime
+                    if linkTitle != None:
+                        theUseCase['linkTitle'] = linkTitle
+                    else:
+                        theUseCase['linkTitle'] = theUseCase['name']
                     printMarkdown(theUseCase, "UseCaseRepository.mustache")
             elif rootNode == 'UseCase':
+                if linkTitle != None:
+                    xmlobj['UseCase']['linkTitle'] = linkTitle
+                else:
+                    xmlobj['UseCase']['linkTitle'] = xmlobj['UseCase']['name']
                 xmlobj['UseCase']['date'] = mtime
                 printMarkdown(xmlobj['UseCase'], "UseCase.mustache")
             else:
-                print("Cannot idenitify root node.")
+                print("Cannot identify root node.")
                 sys.exit(1)
 
             xmlfile.close()
