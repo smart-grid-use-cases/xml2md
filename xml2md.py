@@ -77,15 +77,19 @@ def main():
                     theUseCase['otherUseCases'] = otherUseCases
                     theUseCase['date'] = mtime
                     if linkTitle != None:
-                        theUseCase['linkTitle'] = linkTitle
+                        theUseCase['linkTitle']   = linkTitle
+                        theUseCase['description'] = theUseCase['name']
+                        theUseCase['name']        = linkTitle
                     else:
-                        theUseCase['linkTitle'] = theUseCase['name']
+                        theUseCase['linkTitle']   = theUseCase['name']
                     printMarkdown(theUseCase, "UseCaseRepository.mustache")
             elif rootNode == 'UseCase':
                 if linkTitle != None:
-                    xmlobj['UseCase']['linkTitle'] = linkTitle
+                    xmlobj['UseCase']['linkTitle']   = linkTitle
+                    xmlobj['UseCase']['description'] = xmlobj['UseCase']['name']
+                    xmlobj['UseCase']['name']        = linkTitle
                 else:
-                    xmlobj['UseCase']['linkTitle'] = xmlobj['UseCase']['name']
+                    xmlobj['UseCase']['linkTitle']   = xmlobj['UseCase']['name']
                 xmlobj['UseCase']['date'] = mtime
                 printMarkdown(xmlobj['UseCase'], "UseCase.mustache")
             else:
