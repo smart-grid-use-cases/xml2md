@@ -78,7 +78,10 @@ def main():
                     theUseCase['date'] = mtime
                     if linkTitle != None:
                         theUseCase['linkTitle']   = linkTitle
-                        theUseCase['description'] = theUseCase['name']
+                        if theUseCase['name'].find("'") == -1:
+                            theUseCase['description'] = "'" + theUseCase['name'] + "'"
+                        else:
+                            theUseCase['description'] = theUseCase['name']
                         theUseCase['name']        = linkTitle
                     else:
                         theUseCase['linkTitle']   = theUseCase['name']
